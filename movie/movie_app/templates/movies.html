@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <link rel="stylesheet" href="{% static 'movies.css' %}">
+    
+</head>
+<body>
+    <div>
+        <input type="text" id="title" placeholder="Title">
+    </div>
+    <div>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+    </div>
+    <div>
+        <input type="text" id="image-url" placeholder="URL">
+    </div>
+    <div><button id="submit">Submit</button></div>
+
+
+    <script src="{% static 'movies.js' %}"></script>
+</body>
+</html>
