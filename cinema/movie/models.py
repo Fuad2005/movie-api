@@ -22,7 +22,7 @@ class Genre(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
-    imdb = models.FloatField(validators=[MaxValueValidator(10), MinValueValidator(0)])
+    imdb = models.FloatField(null=True, blank=True)
     image_url = models.URLField(max_length=200)
     streamer = models.ForeignKey(Streamer, on_delete=models.SET_NULL, null=True, blank=True)
     genres = models.ManyToManyField(Genre)

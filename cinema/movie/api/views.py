@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from .serializers import Movie, MovieSerializer, Review, ReviewSerializer
 from rest_framework import status, generics
 from django.shortcuts import get_object_or_404
+from .paginations import StandardPagitation
 
 @api_view(['GET', 'POST'])
 def movie_list(request):
@@ -20,7 +21,7 @@ def movie_list(request):
 
 
 
-@api_view(['GET', 'PUT', 'DELETE',])
+@api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
 def movie_detail(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     if request.method == 'GET':
@@ -36,6 +37,13 @@ def movie_detail(request, pk):
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'PATCH':
+        serializer = MovieSerializer(instance=movie, data=request.data, partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -43,7 +51,11 @@ def movie_detail(request, pk):
 class ReviewListAV(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
+    pagination_class = StandardPagitation
 
 class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
+
+
+

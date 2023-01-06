@@ -5,7 +5,7 @@ from django.db.models import Avg
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    movie = serializers.StringRelatedField()
+    movie_name = serializers.StringRelatedField(source="movie")
     class Meta:
         model = Review
         fields = '__all__'
@@ -21,6 +21,9 @@ class MovieSerializer(serializers.ModelSerializer):
     def validate_imdb(self, value):
         if not 0 <= value <= 10:
             raise serializers.ValidationError('imbd must be between 0 and 10')
+        return value
+
+
 
     def get_average_star(self, obj):
         return obj.reviews.aggregate(avg=Avg('stars')).get('avg')
