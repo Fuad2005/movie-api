@@ -51,7 +51,7 @@ def movie_detail(request, pk):
 class ReviewListAV(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
-    pagination_class = StandardPagitation
+    # pagination_class = StandardPagitation
 
 class ReviewDetailAV(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReviewSerializer
